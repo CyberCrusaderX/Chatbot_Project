@@ -16,8 +16,8 @@ nltk.download('stopwords')
 @st.cache_resource
 def load_model():
     try:
-        model = joblib.load("models/random_forest_model.pkl")
-        vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
+        model = joblib.load("chatbot_intel_rf_model.pkl")
+        vectorizer = joblib.load("chatbot_tfidf_vectorizer.pkl")
         return model, vectorizer
     except Exception as e:
         st.error(f"Error loading model or vectorizer: {e}")
@@ -29,7 +29,7 @@ def load_model():
 @st.cache_data
 def load_dataset():
     try:
-        df = pd.read_csv("data/bitext-media-llm-chatbot-training-dataset.csv")
+        df = pd.read_csv("bitext-media-llm-chatbot-training-dataset.csv")
         df['cleaned_input'] = df['instruction'].apply(clean_text)
         df.drop_duplicates(subset=['instruction'], keep='first', inplace=True)
         return df
